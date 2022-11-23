@@ -8,4 +8,6 @@ public interface ProductDao {
     List<Product> findAll();
     void save(Product product);
     void  updatePriceById (Long id, int price);
+
+    void deleteById(Long id);
 }

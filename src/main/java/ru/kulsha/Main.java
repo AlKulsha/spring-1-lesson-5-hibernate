@@ -14,8 +14,8 @@ public class Main {
       try{
           ProductDao productDao = new ProductDaoImpl(sessionFactoryUtils);
 
-          productDao.updatePriceById(1L, 88);
-          productDao.save(new Product());
+          System.out.println(productDao.findAll());
+          productDao.deleteById(2L);
           System.out.println(productDao.findAll());
 
       } catch (Exception e){

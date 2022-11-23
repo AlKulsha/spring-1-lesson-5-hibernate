@@ -64,4 +64,17 @@ public class ProductDaoImpl implements ProductDao{
         }
 
     }
+
+    @Override
+    public void deleteById(Long id) {
+        try(Session session = sessionFactoryUtils.getSession()) {
+            session.beginTransaction();
+
+//            session.createQuery("DELETE FROM Product WHERE id = :id", Product.class);
+
+            Product product = session.get(Product.class, id);
+            session.delete(product);
+            session.getTransaction().commit();
+        }
+    }
 }
