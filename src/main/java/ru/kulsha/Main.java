@@ -1,39 +1,33 @@
 package ru.kulsha;
 
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import ru.kulsha.config.AppConfiguration;
 
+import java.util.List;
 
 
 public class Main {
-    private static SessionFactory factory;
-
-    public static void init(){
-        factory = new Configuration()
-                .configure("hibernate.cfg.xml")
-                .buildSessionFactory();
-    }
-
-    public static void shutdown(){
-        if(factory != null){
-            factory.close();
-        }
-    }
-
 
     public static void main(String[] args) {
+
+        ApplicationContext context = new AnnotationConfigApplicationContext(AppConfiguration.class);
+        SessionFactoryUtils sessionFactoryUtils = new SessionFactoryUtils();
+        sessionFactoryUtils.init();
+
       try{
-          init();
-          Session session = factory.getCurrentSession();
-          session.beginTransaction();
-          User oldUser = session.get(User.class, 1L);
-          oldUser.print();
-          session.getTransaction().commit();
+          OrderDao orderDao = new OrderDaoImpl(sessionFactoryUtils);
+
+          List<Product> products = orderDao.getPurchasedProducts(2L);
+          System.out.println("*******************************");
+          System.out.println(products);
+          System.out.println("*******************************");
+
       } catch (Exception e){
           e.printStackTrace();
       } finally {
-          shutdown();
+          sessionFactoryUtils.shutdown();
       }
     }
 }
