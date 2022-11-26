@@ -1,13 +1,16 @@
 package ru.kulsha;
 
 import org.hibernate.Session;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Component
 public class ProductDaoImpl implements ProductDao{
 
     private SessionFactoryUtils sessionFactoryUtils;
-
+    @Autowired
     public ProductDaoImpl(SessionFactoryUtils sessionFactoryUtils) {
         this.sessionFactoryUtils = sessionFactoryUtils;
     }
@@ -83,4 +86,5 @@ public class ProductDaoImpl implements ProductDao{
             session.getTransaction().commit();
         }
     }
+
 }

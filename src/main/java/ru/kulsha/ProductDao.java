@@ -10,4 +10,5 @@ public interface ProductDao {
     void  updatePriceById (Long id, int price);
 
     void deleteById(Long id);
+
 }

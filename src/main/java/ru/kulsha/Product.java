@@ -3,6 +3,7 @@ package ru.kulsha;
 
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name="products")
@@ -15,6 +16,14 @@ public class Product {
     private String title;
     @Column(name="price")
     private int price;
+
+    @ManyToMany
+    @JoinTable(
+            name="users_products",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name= "user_id")
+    )
+    List<User> users;
 
     public Product(Long id, String title, int price) {
         this.id = id;
@@ -47,6 +56,14 @@ public class Product {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
 
     @Override
